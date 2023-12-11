@@ -40,9 +40,9 @@ const Body = () => {
                                 <input type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="last name..." />
                             </div>
                         </div>
-                        <div>
+                        {/* <div>
                             <input type="text" className="w-full p-3 border-solid border-2 border-zinc-300 rounded-md focus:shadow-xl hover:shadow-lg" placeholder="first name..." />
-                        </div>
+                        </div> */}
                         <div className="flex justify-center gap-2">
                             <div className="flex-grow bg-slatte-400">
                                 <label htmlFor="fname">roll number</label>
