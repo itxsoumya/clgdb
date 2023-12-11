@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom"
 
 const Data = () => {
     return (
@@ -187,7 +187,7 @@ const Body = () => {
                                     rounded-md
                                     shadow-xl
                                 "
-                                >Submit</button>
+                                ><Link to='/thankyou'>Submit</Link></button>
 
 
                             </div>

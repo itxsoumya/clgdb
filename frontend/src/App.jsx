@@ -3,6 +3,9 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Thankyou from "./components/Thankyou";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
 
 
 const App = () => {
@@ -10,16 +13,38 @@ const App = () => {
     <>
 
       <div className="flex flex-col bg-slatfe-300 h-screen">
+
+
+
+
+
+
+
+
+
+
+
         <Navbar />
         {/* <Body /> */}
 
+        <BrowserRouter>
+          <Routes>
 
-        <Thankyou/>
+            <Route index element={<Body />} />
+
+            <Route path="thankyou" element={<Thankyou />} />
+            {/* <Route path="*" element={<NoPage />} /> */}
+
+          </Routes>
+        </BrowserRouter>
+        {/* <Thankyou/> */}
         <Footer />
       </div>
 
     </>
   )
 }
+
+
 
 export default App;
