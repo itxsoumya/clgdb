@@ -1,6 +1,7 @@
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import Thankyou from "./components/Thankyou";
 
 
 
@@ -10,7 +11,10 @@ const App = () => {
 
       <div className="flex flex-col bg-slatfe-300 h-screen">
         <Navbar />
-        <Body />
+        {/* <Body /> */}
+
+
+        <Thankyou/>
         <Footer />
       </div>
 
