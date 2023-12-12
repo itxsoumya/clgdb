@@ -11,7 +11,7 @@ const Thankyou = ({firstName}) => {
                 <img src={thankimg} alt="" />
 
                 <div className='flex p-5 text-3xl justify-center'>
-                   Thank you &nbsp; <span className='capitalize text-green-600'>{firstName}</span>. Your Data Our Responsibility 🤡
+                   Thank you &nbsp; <b className='capitalize text-green-600'>{firstName}</b>. Your Data Our Responsibility 🤡
                 </div>
             </div>
 
