@@ -4,18 +4,18 @@ const mongoose = require('mongoose')
 const cors = require('cors');
 const app = express()
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    const allowedOrigins = ['http://localhost:5173', 'https://clgdb.onrender.com'];
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     const allowedOrigins = ['http://localhost:5173', 'https://clgdb.onrender.com'];
 
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-app.use(cors(corsOptions));
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+// };
+app.use(cors());
 app.use(bodyParser.json())
 require('dotenv').config()
 const port = process.env.PORT || 5000
