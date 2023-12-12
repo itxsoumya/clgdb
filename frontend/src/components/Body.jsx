@@ -1,59 +1,136 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
+import Thankyou from "./Thankyou";
 
-const Data = () => {
-    return (
-        <div>
-            Body Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, ad sequi dolorem ipsa nihil quibusdam saepe consectetur, a quis accusamus blanditiis repudiandae praesentium laborum sint sed harum rerum debitis odio.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, temporibus, autem nostrum incidunt delectus exercitationem neque aspernatur eligendi et laborum rerum quaerat mollitia quam officiis consequatur eaque asperiores! Consequatur itaque, quae laborum nostrum qui ipsam ex voluptas dolorum aliquid incidunt, dolorem eius vitae molestias. Maiores consequatur quas enim, tempore aliquid esse doloribus eaque laborum distinctio numquam quibusdam quis ipsa inventore. Animi, voluptatem delectus. Eligendi ullam quis, porro dicta itaque mollitia amet quod qui! Dicta iste beatae nobis cum? Atque enim debitis vitae delectus, repellendus corrupti reiciendis omnis magni odio dolor vero quam perspiciatis soluta tempora fugit sit, maxime commodi ducimus eligendi animi praesentium! Totam, deleniti! Laboriosam, magnam qui. Odio consectetur dolore dignissimos quaerat architecto iure aliquid. Facere impedit aspernatur delectus sapiente nemo dolorem, officiis quis. Ipsam debitis voluptatum, nemo quos beatae doloribus reiciendis? Cum sunt quasi excepturi modi in distinctio suscipit autem ipsa repudiandae accusantium facere eaque pariatur odit officiis eum laboriosam, animi praesentium! Nemo saepe repellendus consectetur eum quasi laborum laboriosam natus maxime ratione. At, amet corporis! Placeat laborum fuga amet error quaerat optio quisquam beatae quibusdam hic natus, quae dolores tempore eos animi nihil repellendus quasi numquam facilis, debitis vitae cupiditate. Eum aspernatur qui officia illum autem cupiditate quibusdam expedita excepturi doloribus in quidem perspiciatis ut doloremque ad tenetur nemo, iure, odit ab cum voluptate dolor! Molestiae possimus sint, iste debitis quis odit labore temporibus rem nesciunt esse. Non error inventore illum eius pariatur sit eaque ipsa vitae dolorem cupiditate saepe eveniet quidem maxime consectetur culpa sunt modi id, et, dolore dolorum quas ab soluta officiis explicabo! Magni, iure omnis praesentium harum molestias ad repellendus fugiat excepturi, sed, inventore ipsa commodi fugit quo rem quidem itaque? Doloremque optio perspiciatis est tempora ullam eos earum magni dolor, nemo voluptas, voluptatem facilis possimus debitis sed fugiat? Cumque architecto aut, iusto aspernatur ipsam veritatis. Vitae ab, nihil minima labore sed molestias laboriosam illum aspernatur optio quaerat, enim voluptates error quod reiciendis culpa corrupti pariatur mollitia, distinctio quisquam magnam. Nihil et, debitis porro nulla obcaecati molestiae error sit! Consequuntur earum enim quam aliquam, veniam provident odit eaque, hic, voluptas velit sed reiciendis ea. Dolores soluta optio labore in itaque consequuntur cumque hic exercitationem quis tempora. Perspiciatis et, veritatis possimus, ex ab rem voluptatum facere dolore excepturi aspernatur, earum officia ipsum est libero commodi quidem dicta magnam optio molestiae sed totam? Eaque saepe enim at id accusantium magnam culpa, atque, delectus quibusdam sunt ipsum reiciendis sequi nobis libero voluptatibus ut? Quisquam, hic aut nisi dicta ab enim provident omnis id, ex placeat earum laborum rem obcaecati consequatur modi amet reprehenderit dolores quas optio a, repellendus odio officia repellat sapiente. Fugit nam temporibus asperiores quis eaque. Repudiandae numquam debitis soluta, sed eligendi nam similique quaerat et esse impedit deleniti. Quisquam aliquam iusto libero maxime enim esse fugit aut voluptas expedita sunt, doloribus perferendis eaque voluptatem nulla, nesciunt, cumque voluptates. Nobis voluptas corrupti necessitatibus inventore minus excepturi incidunt iste nulla, tenetur quam. Blanditiis consequuntur aspernatur saepe voluptas obcaecati, eum ab ducimus fuga quas adipisci illo!
-        </div>
-    )
-}
+
+
+
+
+
 
 const Body = () => {
+    // const api_uri = process.env.API_URI
+    const api_uri = "http://127.0.0.1:3000"
+
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        rollNumber: '',
+        regNumber: '',
+        branch: '',
+        phoneNumber: '',
+        gender: '',
+        dob: '',
+        district: '',
+        city: '',
+        zipCode: '',
+        email: '',
+        igusername: '',
+        hobby: '',
+        currentSem: ''
+
+    });
+
+    const [successSubmit,setSuccessSubmit] = useState(false);
+    const [showDetail,setShowDetail] = useState(false)
+
+    
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+
+        let parsedValue = value
+
+        if (name === 'currentSem' || name === 'regNumber' || name === 'zipCode' || name === 'phoneNumber') parsedValue = parseInt(value, 10);
+
+        setFormData({ ...formData, [name]: parsedValue })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        // console.log(formData)
+
+
+        try {
+            const response = await fetch(api_uri, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if(response.ok){
+                console.log('[+] received data..')
+                const resData = await response.json();
+                console.log(resData)
+                setSuccessSubmit(true)
+
+            }else{
+                console.error('Failed to send form data to the API')
+            }
+        }catch(err){
+            console.error('err: ',err)
+        }
+
+
+    }
+
+
+    if(successSubmit){
+        return <Thankyou firstName={formData.firstName}/>
+    }else if(showDetail){
+        console.log('details')
+    }else
+
+
     return (
         <div className="flex-grow m-3 pt-4">
 
             <div className="bg-reed-200 mx-auto max-w-3xl">
 
                 {/* body */}
-                <span class="text-4xl box-decoration-slice  bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-2 ...">
+
+                
+                <span className="text-4xl box-decoration-slice  bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-2 ...">
                     Fill &<br />
                     Feel
-                </span>
-                <span class="box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-2 ...">
+                </span>&nbsp;
+                <span className="box-decoration-clone bg-gradient-to-r from-green-500 to-teal-500 text-white px-2 ...">
                     Hello<br />
                     World
                 </span>
 
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-6 justify-center">
                         <div className="flex justify-center gap-2">
                             <div className="flex-grow bg-slatte-400">
-                                <label htmlFor="fname">first name</label>
+                                <label htmlFor="fname">First name</label>
                                 <br />
-                                <input type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="first name..." />
+                                <input required type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="first name..." name='firstName' onChange={handleChange} />
 
                             </div>
                             <div className="flex-grow">
-                                <label htmlFor="lname">last name</label>
+                                <label htmlFor="lname">Last name</label>
                                 <br />
-                                <input type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="last name..." />
+                                <input required type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="last name..." name="lastName" onChange={handleChange} />
                             </div>
                         </div>
                         {/* <div>
-                            <input type="text" className="w-full p-3 border-solid border-2 border-zinc-300 rounded-md focus:shadow-xl hover:shadow-lg" placeholder="first name..." />
+                            <input required type="text" className="w-full p-3 border-solid border-2 border-zinc-300 rounded-md focus:shadow-xl hover:shadow-lg" placeholder="first name..." />
                         </div> */}
                         <div className="flex justify-center gap-2">
                             <div className="flex-grow bg-slatte-400">
-                                <label htmlFor="fname">roll number</label>
+                                <label htmlFor="fname">Roll number</label>
                                 <br />
-                                <input type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="roll number..." />
+                                <input required type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="roll number..." name="rollNumber" onChange={handleChange} />
 
                             </div>
                             <div className="flex-grow">
-                                <label htmlFor="lname">registration number</label>
+                                <label htmlFor="lname">Registration number</label>
                                 <br />
-                                <input type="number" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="registration number..." />
+                                <input required type="number" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="registration number..." name="regNumber" onChange={handleChange} />
                             </div>
                         </div>
 
@@ -63,8 +140,8 @@ const Body = () => {
                                 <br />
 
 
-                                <select name="language" id="language" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg h-[68%] cursor-pointer">
-                                    <option value="cse">CSE</option>
+                                <select name="branch" id="branch" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg h-[68%] cursor-pointer" onChange={handleChange}>
+                                    <option value="cse" selected>CSE</option>
                                     <option value="it">IT</option>
                                     <option value="me">ME</option>
                                     <option value="eee">EEE</option>
@@ -76,7 +153,7 @@ const Body = () => {
                             <div className="flex-grow">
                                 <label htmlFor="lname">phone number</label>
                                 <br />
-                                <input type="number" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="phone number..." />
+                                <input required type="number" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="phone number..." name="phoneNumber" onChange={handleChange} />
                             </div>
                         </div>
 
@@ -86,8 +163,8 @@ const Body = () => {
                                 <br />
 
 
-                                <select name="language" id="language" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg h-[68%] cursor-pointer">
-                                    <option value="cse">male</option>
+                                <select name="gender" id="gender" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg h-[68%] cursor-pointer" onChange={handleChange}>
+                                    <option value="cse" selected>male</option>
                                     <option value="it">female</option>
                                     <option value="me">others</option>
 
@@ -99,7 +176,7 @@ const Body = () => {
                             <div className="flex-grow">
                                 <label htmlFor="lname">Date of birth</label>
                                 <br />
-                                <input type="date" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg cursor-pointer" placeholder="Date of birth..." />
+                                <input required type="date" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg cursor-pointer" placeholder="Date of birth..." name="dob" onChange={handleChange} />
                             </div>
                         </div>
 
@@ -108,19 +185,19 @@ const Body = () => {
                             <div className="flex-grow">
                                 <label htmlFor="lname">district</label>
                                 <br />
-                                <input type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="dist..." />
+                                <input required type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="dist..." name="district" onChange={handleChange} />
                             </div>
 
                             <div className="flex-grow">
                                 <label htmlFor="lname">city</label>
                                 <br />
-                                <input type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="city..." />
+                                <input required type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="city..." name="city" onChange={handleChange} />
                             </div>
 
                             <div className="flex-grow">
                                 <label htmlFor="lname">ZIP code</label>
                                 <br />
-                                <input type="number" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="zip" />
+                                <input required type="number" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="zip" name="zipCode" onChange={handleChange} />
                             </div>
                         </div>
 
@@ -130,14 +207,14 @@ const Body = () => {
                                 <br />
 
 
-                                <input type="email" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg " placeholder="email..." />
+                                <input required type="email" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg " placeholder="email..." name="email" onChange={handleChange} />
 
 
                             </div>
                             <div className="flex-grow">
                                 <label htmlFor="lname">Instagram Username</label>
                                 <br />
-                                <input type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg " placeholder="insta_id" />
+                                <input required type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg " placeholder="insta_id" name="igusername" onChange={handleChange} />
                             </div>
                         </div>
 
@@ -148,7 +225,7 @@ const Body = () => {
                             <label htmlFor="">Mention Your Hobby</label>
                             <br />
 
-                            <input type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="type here..." />
+                            <input required type="text" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg" placeholder="type here..." name="hobby" onChange={handleChange} />
 
 
                         </div>
@@ -163,7 +240,7 @@ const Body = () => {
                                 <br />
 
 
-                                <input type="number" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg " placeholder="sem.." />
+                                <input required type="number" className="p-3 border-solid border-2 border-zinc-300 rounded-md w-full focus:shadow-xl hover:shadow-lg " placeholder="sem.." name="currentSem" onChange={handleChange} />
 
 
                             </div>
@@ -187,7 +264,11 @@ const Body = () => {
                                     rounded-md
                                     shadow-xl
                                 "
-                                ><Link to='/thankyou'>Submit</Link></button>
+                                >
+                                    {/* <Link to='/thankyou'>Submit</Link> */}
+
+                                    Submit
+                                </button>
 
 
                             </div>

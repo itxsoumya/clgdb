@@ -2,7 +2,7 @@
 import thankimg from '../asset/thank.jpg'
 
 
-const Thankyou = () => {
+const Thankyou = ({firstName}) => {
     return (
         <div className="flex-grow m-3 pt-4">
 
@@ -11,7 +11,7 @@ const Thankyou = () => {
                 <img src={thankimg} alt="" />
 
                 <div className='flex p-5 text-3xl justify-center'>
-                   Thank Yo. Your Data Our Responsibility 🤡
+                   Thank you &nbsp; <span className='capitalize text-green-600'>{firstName}</span>. Your Data Our Responsibility 🤡
                 </div>
             </div>
 
