@@ -10,7 +10,8 @@ import Thankyou from "./Thankyou";
 
 const Body = () => {
     // const api_uri = process.env.API_URI
-    const api_uri = "http://127.0.0.1:3000"
+    // const api_uri = "http://127.0.0.1:3000" //for local
+    const api_uri = "https://clgdb.onrender.com"
 
     const [formData, setFormData] = useState({
         firstName: '',
